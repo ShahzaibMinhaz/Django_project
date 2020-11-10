@@ -107,7 +107,7 @@
                 <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
               </label> -->
           
-              <p class="para">Already have an acount <a href='{% url 'Home' %}' style="color:dodgerblue">SIGN UP</a>.</p>
+              <p class="para">Already have an acount <a href='{% url 'register' %}' style="color:dodgerblue">SIGN UP</a>.</p>
           
               <input type="submit" class="signupbtn"value="SIGN IN"/>
             </form>
@@ -121,7 +121,6 @@
 
       //Query All input fields
       var form_fields = document.getElementsByTagName('input')
-      form_fields[1].placeholder='Enter Username';
       form_fields[2].placeholder='Enter Password';
 
 
