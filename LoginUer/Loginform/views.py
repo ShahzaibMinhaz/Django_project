@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.views import View
+# import django.views.generic.base import TemplateView
 
 # Create your views here.
 
@@ -106,5 +107,27 @@ def opps(request):
     # form = Opps()
     
     return render(request,'opps.html',{'val1':10,'val2':2,'val3':5})
+def new(request):
+    return render(request,'new.html',{'val1':10,'val2':2,'val3':5,'username':'Shahzaib','password':'12345','id':3})
 
-# class classbased(View):
+class classbased(View):
+    def get(self,request):
+        form = Opps()
+        return render(request,'opps.html',{'form':form})
+
+    def post(self,request):
+        form = Opps(request.POST)
+        if form.is_valid():
+            sign = form.cleaned_data['Operation']
+            value1 = form.cleaned_data['value1']
+            value2 = form.cleaned_data['value2']
+            if sign == '+':
+                result = (value1 + value2)
+            else:
+                result = (value1 - value2)
+            # str(result)
+            # print(result)
+    
+            return render(request,'opps.html',{'form':form,'result':result})
+        
+  
