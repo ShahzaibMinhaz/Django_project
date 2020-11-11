@@ -1,9 +1,10 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
-from .forms import CreateUserForm,Userupdateform,Userupdateprofile
+from django.http import HttpResponse,HttpResponseNotFound,Http404
+from .forms import CreateUserForm,Userupdateform,Userupdateprofile,Opps
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
+from django.views import View
 
 # Create your views here.
 
@@ -73,3 +74,37 @@ def profile(request):
     # if not request.user.is_authenticated:
     #     return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
     return render(request,'profile.html',context)
+
+def http(request):
+    if id is None:
+        pass
+    else :
+        raise Http404   ("Page does not exist")
+    
+def comments(request):
+    page_number = 45 
+    return render('','profile.html')  
+
+    # return HttpResponse('<h1>hello World</h1>')
+
+def opps(request):
+    # if request.method == 'POST':
+    #     form = Opps(request.POST)
+    #     print(request.POST)
+    #     if form.is_valid():
+    #         sign = form.cleaned_data['Operation']
+    #         value1 = form.cleaned_data['value1']
+    #         value2 = form.cleaned_data['value2']
+    #         if sign == '+':
+    #             result = (value1 + value2)
+    #         else:
+    #             result = (value1 - value2)
+    #         # str(result)
+    #         # print(result)
+    
+    #         return render(request,'opps.html',{'form':form,'result':result})
+    # form = Opps()
+    
+    return render(request,'opps.html',{'val1':10,'val2':2,'val3':5})
+
+# class classbased(View):
