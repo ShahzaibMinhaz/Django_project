@@ -108,7 +108,7 @@ def opps(request):
     
     return render(request,'opps.html',{'val1':10,'val2':2,'val3':5})
 def new(request):
-    return render(request,'new.html',{'val1':10,'val2':2,'val3':5,'username':'Shahzaib','password':'12345','id':3})
+    return render(request,'new.html',{'val1':10,'val2':2,'val3':5,'username':'Shahzaib','password':'12345','id':1})
 
 class classbased(View):
     def get(self,request):
