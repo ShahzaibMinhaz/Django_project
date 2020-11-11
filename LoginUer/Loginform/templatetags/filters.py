@@ -24,6 +24,13 @@ def compare(value,element):
     else:
         return ""
 
+def comparefilter(value, arg):
+    if arg[0] == "shahzaib" and arg[1] == '12345':
+        if value == 1:
+            return arg[2]
+
+  
+
 
 
 register.filter('addition', addition)
@@ -31,3 +38,4 @@ register.filter('subtraction', subtraction)
 register.filter('multiplication', multiplication)
 register.filter('divide', divide)
 register.filter('compare', compare)
+register.filter('comparefilter', comparefilter)
