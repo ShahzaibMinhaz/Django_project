@@ -137,6 +137,7 @@ class classbased(View):
 
 def apirequest(request):
     news_data = requests.get('http://data.fixer.io/api/latest?access_key=23f15347a193045a1ab47e0eb94d0a86')
+    '''countryname return all countries name'''
     countryname = news_data.json()['rates'].keys()
     if request.method == 'POST':
         currency = request.POST['country']
@@ -145,12 +146,15 @@ def apirequest(request):
         # print(request.POST['country'])
         country_name = currency
         print(country_name)
+
+        '''country_name will give countryname to url to fetch exchange rate'''
         news_data = requests.get('http://api.currencylayer.com/live?access_key=eb821c1dbf7ba857ccc0a40e3c342da5&currencies={}'.format(country_name))
         # values = data('PKR')
         # print(values)
         currencyvalue = news_data.json()['quotes']['USD{}'.format(country_name)]
         return render(request,'currency.html',{'countryname':countryname,'currencyvalue':currencyvalue,'country_name':country_name})
     
+
     return render(request,'currency.html',{'countryname':countryname})
     
     
