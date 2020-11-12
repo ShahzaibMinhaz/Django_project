@@ -12,6 +12,7 @@
     {{username}}
     {{password}}
     {{ id|compare:'developer' }}
+    {% now "d M, Y" %}
     
     <h1>{{ id|comparefilter:data}}</h1>
 </body>

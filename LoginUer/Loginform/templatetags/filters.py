@@ -28,6 +28,12 @@ def comparefilter(value, arg):
     if arg[0] == "shahzaib" and arg[1] == '12345':
         if value == 1:
             return arg[2]
+        else:
+            return ""
+    else:
+        return ""
+ 
+     
 
   
 

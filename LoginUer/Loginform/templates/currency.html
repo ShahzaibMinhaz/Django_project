@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <form method="POST">
+       {% csrf_token %}
+       <h1>Select country of which you want usd eachange rate</h1>
+       <select name="country" id="cars">
+        <option value="Select country code">Select country code</option>
+        {% for country in countryname  %}
+            <option value="{{ country }}">{{ country }}</option>
+        {% endfor %}
+        <!-- <input type="text" value="" name="value"> -->
+      </select>
+       <input type="submit" value="submit" id="">
+   </form>
+   {% if currencyvalue %}
+   <h1>USD to {{ country_name }} exchange rate is {{ currencyvalue }}</h1>
+   {% endif %}
+</body>
+</html>

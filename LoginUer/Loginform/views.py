@@ -1,11 +1,14 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseNotFound,Http404
-from .forms import CreateUserForm,Userupdateform,Userupdateprofile,Opps
+from .forms import CreateUserForm,Userupdateform,Userupdateprofile,Opps,cur
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
 from django.views import View
+import requests
+import json
 # import django.views.generic.base import TemplateView
+# from .Apitest import data
 
 # Create your views here.
 
@@ -13,7 +16,7 @@ def index(request):
     if request.method == "POST":
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
+            username = form.cleaned_data.get('username').lower()
             print(username)
             form.save()
             messages.SUCCESS = (request, 'Acount Created')
@@ -112,9 +115,10 @@ def new(request):
     return render(request,'new.html',{'val1':10,'val2':2,'val3':5,'data':data,'id':1})
 
 class classbased(View):
+    template_name = 'opps.html'
     def get(self,request):
         form = Opps()
-        return render(request,'opps.html',{'form':form})
+        return render(request,self.template_name,{'form':form})
 
     def post(self,request):
         form = Opps(request.POST)
@@ -129,6 +133,44 @@ class classbased(View):
             # str(result)
             # print(result)
     
-            return render(request,'opps.html',{'form':form,'result':result})
-        
-  
+            return render(request,self.template_name,{'form':form,'result':result})
+
+def apirequest(request):
+    news_data = requests.get('http://data.fixer.io/api/latest?access_key=23f15347a193045a1ab47e0eb94d0a86')
+    countryname = news_data.json()['rates'].keys()
+    if request.method == 'POST':
+        currency = request.POST['country']
+        # value = request.POST['value']
+        # print(request.POST['country'])
+        # print(request.POST['country'])
+        country_name = currency
+        print(country_name)
+        news_data = requests.get('http://api.currencylayer.com/live?access_key=eb821c1dbf7ba857ccc0a40e3c342da5&currencies={}'.format(country_name))
+        # values = data('PKR')
+        # print(values)
+        currencyvalue = news_data.json()['quotes']['USD{}'.format(country_name)]
+        return render(request,'currency.html',{'countryname':countryname,'currencyvalue':currencyvalue,'country_name':country_name})
+    
+    return render(request,'currency.html',{'countryname':countryname})
+    
+    
+
+
+# class currechanger(View):
+#     template_name = 'currency.html'
+#     def get(self,request):
+#         form = curr()
+#         return render(request,self.template_name,{'form':form})
+
+#     # def post(self,request):
+        # form = curr(request.POST)
+        # if form.is_valid():
+        #     sign = form.cleaned_data['Operation']
+        #     value1 = form.cleaned_data['value1']
+        #     value2 = form.cleaned_data['value2']
+        #     if sign == '+':
+        #         result = (value1 + value2)
+        #     else:
+        #         result = (value1 - value2)
+        #     str(result)
+        #     print(result)

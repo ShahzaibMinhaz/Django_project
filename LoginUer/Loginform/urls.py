@@ -10,8 +10,10 @@ urlpatterns = [
     path('profile',views.profile,name='profile'),
     path('logout',views.logoutuser,name='logout'),
     path('classview',views.classbased.as_view()),
-    # path('template',views.Tempal    )
-     path('new',views.new,name='new')
+    # path('template',views.Tempal)
+    path('new',views.new,name='new'),
+    path('cur',views.apirequest)
+   
 
 ]
 

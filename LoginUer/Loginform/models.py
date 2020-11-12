@@ -8,4 +8,11 @@ class profile(models.Model):
     def __str__(self):
         return self.user.username
 
+class currency(models.Model):
+    CountryName = models.CharField(max_length=20,primary_key=True)
+    CurrencyValue = models.IntegerField()
+
+    def __str__(self):
+        return self.CountryName
+
 

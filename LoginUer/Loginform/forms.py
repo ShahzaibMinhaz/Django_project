@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import profile
+from .models import profile,currency
 
 
 class CreateUserForm(UserCreationForm):
@@ -28,3 +28,8 @@ class Opps(forms.Form):
 	Operation = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect)
 	value1 = forms.IntegerField()
 	value2 = forms.IntegerField()
+
+class cur(forms.ModelForm):
+	class Meta:
+		model = currency
+		fields = ['CountryName','CurrencyValue']
