@@ -29,7 +29,12 @@ class Opps(forms.Form):
 	value1 = forms.IntegerField()
 	value2 = forms.IntegerField()
 
-class cur(forms.ModelForm):
-	class Meta:
-		model = currency
-		fields = ['CountryName','CurrencyValue']
+class customformajax(forms.Form):
+# 	FAVORITE_COLORS_CHOICES = [
+#     ('blue', 'Blue'),
+#     ('green', 'Green'),
+#     ('black', 'Black'),
+# ]
+	Name = forms.CharField(widget=forms.TextInput(attrs={'id': 'name', 'placeholder':'Shahzaib'}))
+	Email = forms.CharField(widget=forms.EmailInput(attrs={'id':'email','placeholder':'email'}))
+	# choice_field = forms.ChoiceField(widget=forms.RadioSelect({'id':'radio','name':'radio'}), choices=FAVORITE_COLORS_CHOICES)

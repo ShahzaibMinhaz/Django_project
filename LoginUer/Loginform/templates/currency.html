@@ -21,7 +21,6 @@
    </form>
   
    <h1 id="result"> </h1>
- 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.min.js"></script>
@@ -34,17 +33,12 @@
 
     $('#post-form').on('submit', function(event){
         event.preventDefault();
-       
-        // console.log("form submitted!")  // sanity check
         if(selectedCountry == undefined){
             alert('Country is not Selected')
         }else{
             getcuurency()
             document.getElementById('result').innerHTML = 'waiting...'
         }
-       
-        // value : $('#country').children("option:selected").val();
-        // console.log(value)
     });
     function getCookie(c_name) {
       if (document.cookie.length > 0) {
@@ -72,7 +66,7 @@
                 // $('#post-text').val(''); // remove the value from the input
                 // alert(json)
                 document.getElementById('result').innerHTML = '1 USD to '+selectedCountry+' exchange rate = '+json
-                console.log(json); // log the returned json to the console
+                console.log(); // log the returned json to the console
                 console.log("success"); // another sanity check
             },
 

@@ -15,4 +15,11 @@ class currency(models.Model):
     def __str__(self):
         return self.CountryName
 
+class currency(models.Model):
+    Name = models.CharField(max_length=20,primary_key=True)
+    DOB = models.DateField(auto_now=True)
+
+    def __str__(self):
+        return self.CountryName
+
 

@@ -13,7 +13,11 @@ urlpatterns = [
     # path('template',views.Tempal)
     path('new',views.new,name='new'),
     path('cur',views.apirequest),
-    path('getcurrency/',views.getcurrency)
+
+    # with AJAX request
+    path('customformajax',views.djangoform),
+    path('getcurrency/',views.getcurrency),
+    path('getdata/',views.getdata)
    
 
 ]

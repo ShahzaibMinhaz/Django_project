@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse,HttpResponseNotFound,Http404
-from .forms import CreateUserForm,Userupdateform,Userupdateprofile,Opps,cur
+from django.http import HttpResponse,HttpResponseNotFound,Http404,JsonResponse
+from .forms import CreateUserForm,Userupdateform,Userupdateprofile,Opps,customformajax
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
@@ -177,6 +177,8 @@ def apirequest(request):
         #         result = (value1 - value2)
         #     str(result)
         #     print(result)
+
+
 def getcurrency(request):
     if request.method == 'POST':
         print('In getcurrency post request')
@@ -193,4 +195,14 @@ def getcurrency(request):
         except:
             print("country name not mentioned")
             return HttpResponse('false')
+
+def djangoform(request):
+    form = customformajax()
+    return render(request,'customformajax.html',{'form':form})
+
+def getdata(request):
+    Name = request.POST['name']
+    Email = request.POST['email']
+    context = {'name':Name,'email':Email} 
+    return JsonResponse(context)
         

@@ -32,7 +32,6 @@ def comparefilter(value, arg):
             return ""
     else:
         return ""
- 
      
 
   
