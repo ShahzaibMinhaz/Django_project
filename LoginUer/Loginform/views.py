@@ -141,20 +141,19 @@ def apirequest(request):
     countryname = news_data.json()['rates'].keys()
     if request.method == 'POST':
         currency = request.POST['country']
-        # value = request.POST['value']
-        # print(request.POST['country'])
-        # print(request.POST['country'])
-        country_name = currency
-        print(country_name)
-
-        '''country_name will give countryname to url to fetch exchange rate'''
-        news_data = requests.get('http://api.currencylayer.com/live?access_key=eb821c1dbf7ba857ccc0a40e3c342da5&currencies={}'.format(country_name))
-        # values = data('PKR')
-        # print(values)
-        currencyvalue = news_data.json()['quotes']['USD{}'.format(country_name)]
-        return render(request,'currency.html',{'countryname':countryname,'currencyvalue':currencyvalue,'country_name':country_name})
-    
-
+        try:
+            # value = request.POST['value']
+            # print(request.POST['country'])
+            # print(request.POST['country'])
+            country_name = currency
+            '''country_name will give countryname to url to fetch exchange rate'''
+            news_data = requests.get('http://api.currencylayer.com/live?access_key=eb821c1dbf7ba857ccc0a40e3c342da5&currencies={}'.format(country_name))
+            # values = data('PKR')
+            # print(values)
+            currencyvalue = news_data.json()['quotes']['USD{}'.format(country_name)]
+            return render(request,'currency.html',{'countryname':countryname,'currencyvalue':currencyvalue,'country_name':country_name})
+        except:
+            print("country name not mentioned")
     return render(request,'currency.html',{'countryname':countryname})
     
     
@@ -178,3 +177,20 @@ def apirequest(request):
         #         result = (value1 - value2)
         #     str(result)
         #     print(result)
+def getcurrency(request):
+    if request.method == 'POST':
+        print('In getcurrency post request')
+        currency = request.POST['value']
+        # print('currency = ',currency)
+        try:
+            country_name = currency
+            '''country_name will give countryname to url to fetch exchange rate'''
+            news_data = requests.get('http://api.currencylayer.com/live?access_key=eb821c1dbf7ba857ccc0a40e3c342da5&currencies={}'.format(country_name))
+            # values = data('PKR')
+            # print(values)
+            currencyvalue = news_data.json()['quotes']['USD{}'.format(country_name)]
+            return HttpResponse(currencyvalue)
+        except:
+            print("country name not mentioned")
+            return HttpResponse('false')
+        

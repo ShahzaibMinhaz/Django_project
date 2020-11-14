@@ -12,7 +12,8 @@ urlpatterns = [
     path('classview',views.classbased.as_view()),
     # path('template',views.Tempal)
     path('new',views.new,name='new'),
-    path('cur',views.apirequest)
+    path('cur',views.apirequest),
+    path('getcurrency/',views.getcurrency)
    
 
 ]
