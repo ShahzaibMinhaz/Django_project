@@ -8,18 +8,21 @@ class profile(models.Model):
     def __str__(self):
         return self.user.username
 
-class currency(models.Model):
-    CountryName = models.CharField(max_length=20,primary_key=True)
-    CurrencyValue = models.IntegerField()
+
+class invoiceheader(models.Model):
+    Invoice_Number = models.IntegerField(max_length=None,primary_key=True)
+    Name = models.CharField(max_length=100)
+    Total_Price = models.IntegerField()
 
     def __str__(self):
-        return self.CountryName
+        return str(self.Invoice_Number)
 
-class currency(models.Model):
-    Name = models.CharField(max_length=20,primary_key=True)
-    DOB = models.DateField(auto_now=True)
+class itemdetails(models.Model):
+    Item_Name = models.CharField(max_length=100)
+    Item_quentity = models.CharField(max_length=100)
+    Item_Price = models.IntegerField()
 
     def __str__(self):
-        return self.CountryName
+        return str(self.Item_Name)
 
 

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseNotFound,Http404,JsonResponse
-from .forms import CreateUserForm,Userupdateform,Userupdateprofile,Opps,customformajax
+from .forms import CreateUserForm,Userupdateform,Userupdateprofile,Opps,customformajax,Invoice_details
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
@@ -110,6 +110,7 @@ def opps(request):
     # form = Opps()
     
     return render(request,'opps.html',{'val1':10,'val2':2,'val3':5})
+    
 def new(request):
     data = ['shahzaib','12345','developer']
     return render(request,'new.html',{'val1':10,'val2':2,'val3':5,'data':data,'id':1})
@@ -205,4 +206,31 @@ def getdata(request):
     Email = request.POST['email']
     context = {'name':Name,'email':Email} 
     return JsonResponse(context)
-        
+
+
+def setsessions(request):
+    request.session['name'] = 'Shahzaib'
+    return render(request,'sessions.html')
+
+def getsessions(request):
+    name = request.session['name']
+    return render(request,'sessions.html',{'name':name})
+
+def delsessions(request):
+    if request.session:
+        del request.session['name']
+    return render(request,'sessions.html')
+
+def requestsessions(request):
+    if request.session.test_cookie_worked():
+        request.session.delete_test_cookie()
+        print('Permission')
+    else:
+        request.session.set_test_cookie()
+        messages.error(request, 'Please enable cookie')
+        print('enable permission')
+    return render(request, 'sessions.html')
+
+def invoice(request):
+    form = Invoice_details()
+    return render(request,'Invoice.html',{'form':form})

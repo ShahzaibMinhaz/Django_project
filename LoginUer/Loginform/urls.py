@@ -13,6 +13,12 @@ urlpatterns = [
     # path('template',views.Tempal)
     path('new',views.new,name='new'),
     path('cur',views.apirequest),
+    path('setsessions',views.setsessions),
+    path('getsessions',views.getsessions),
+    path('delsessions',views.delsessions),
+    path('requestsessions',views.requestsessions),
+    path('invoice',views.invoice),
+
 
     # with AJAX request
     path('customformajax',views.djangoform),
