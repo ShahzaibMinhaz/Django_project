@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,HttpResponseNotFound,Http404,JsonResponse
 from .forms import CreateUserForm,Userupdateform,Userupdateprofile,Opps,customformajax,Invoice_details
+from .models import itemdetails,invoiceheader
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login,logout
@@ -234,3 +235,29 @@ def requestsessions(request):
 def invoice(request):
     form = Invoice_details()
     return render(request,'Invoice.html',{'form':form})
+
+    def submitinvoicedata(request):
+
+    # get data from ajax request 
+    table_Data = json.loads(request.POST['table_Data'])
+    total_Price = request.POST['total_Price']
+
+    # to save data in invoice header
+    invoice = invoiceheader.objects.create(Name=request.user.username,Total_Price=total_Price)
+    invoice.save()
+    id = invoice.id
+    invoice_id = invoiceheader.objects.get(id=id)
+    # print(invoice_id)
+
+    # for to save individual item data in table 
+    for i in range(len(table_Data)):
+        # print('entry No ',i)
+        productName = table_Data[i]['productName']
+        productQuantity = table_Data[i]['productQuantity']
+        productPrice = table_Data[i]['productPrice']
+        print('Invoice ID',type(id))
+        item_details = itemdetails.objects.create(Item_Name=productName,Item_quentity=productQuantity,Item_Price=productPrice,Invoice_header=invoice_id)
+        item_details.save()
+
+
+    return HttpResponse('Item Sucessfully saved')

@@ -23,7 +23,8 @@ urlpatterns = [
     # with AJAX request
     path('customformajax',views.djangoform),
     path('getcurrency/',views.getcurrency),
-    path('getdata/',views.getdata)
+    path('getdata/',views.getdata),
+    path('submitinvoice/',views.submitinvoicedata)
    
 
 ]

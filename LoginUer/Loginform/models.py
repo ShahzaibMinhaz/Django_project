@@ -10,17 +10,14 @@ class profile(models.Model):
 
 
 class invoiceheader(models.Model):
-    Invoice_Number = models.IntegerField(max_length=None,primary_key=True)
     Name = models.CharField(max_length=100)
     Total_Price = models.IntegerField()
-
-    def __str__(self):
-        return str(self.Invoice_Number)
 
 class itemdetails(models.Model):
     Item_Name = models.CharField(max_length=100)
     Item_quentity = models.CharField(max_length=100)
     Item_Price = models.IntegerField()
+    Invoice_header = models.ForeignKey(invoiceheader, on_delete=models.CASCADE)
 
     def __str__(self):
         return str(self.Item_Name)

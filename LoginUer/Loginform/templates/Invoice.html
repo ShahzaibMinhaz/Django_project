@@ -29,18 +29,20 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="basic-addon1">Total Price</span>
         </div>
-        <input type="text" disabled class="form-control TotalPrice" placeholder="Total" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" disabled class="form-control TotalPrice" placeholder="0" aria-label="Username" aria-describedby="basic-addon1">
         <input type="button" class="btn btn-success mt-3 SubmitInvoice" value="Submit Invoice Data">
       </div>
      
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.min.js"></script>
 <script type="text/javascript">
 
     // initialize total price variable 
     Total_price = 0
+
+    // initialize array to save all data of table 
+    var ary = [];
 
     // submit button 
     $(document ).ready(function() {
@@ -70,7 +72,7 @@
             $('.TotalPrice').val(Total_price)
 
         });
-
+        
         // delete row with row button 
         $(document).on('click', '.btn-danger', function() {
             // get delete item total price 
@@ -86,16 +88,17 @@
             // remove tr from table 
             $(this).parent().parent('tr').remove();
         });
-
+        // initialize array to save all data of table 
+        var ary = [];
         // Submit Invoice Data button 
         $('.SubmitInvoice').click(function(e){
             e.preventDefault()
             alert('Submit Invoice')
 
             // get all data of table in array ary
-            var ary = [];
             var table = $(".table");
             table.find('tr').each(function (i, el) {
+                // i = 0 not included b/c of header 
                 if(i!=0){ 
                     console.log(i+''+el)
                     var $tds = $(this).find('td'),
@@ -106,9 +109,57 @@
                 }
             });
             console.log(ary)
-            table.children('tbody').children('tr').remove();
+           
+
+            // set total price to zero
+            $('.TotalPrice').val('')
+            submitData() 
         });
 
+        // function to get cookies 
+        function getCookie(c_name) {
+            if (document.cookie.length > 0) {
+                c_start = document.cookie.indexOf(c_name + "=");
+                if (c_start != -1) {
+                c_start = c_start + c_name.length + 1;
+                c_end = document.cookie.indexOf(";", c_start);
+                if (c_end == -1) c_end = document.cookie.length;
+                return unescape(document.cookie.substring(c_start, c_end));
+            }
+        }}
+
+        // function to send data to django 
+        function submitData() {
+            $.ajax({
+                headers:{
+                    "X-CSRFToken": getCookie("csrftoken")
+                },
+                url : "submitinvoice/", // the endpoint
+                type : "POST", // http method
+                data : { 'table_Data' : JSON.stringify(ary),'total_Price': Total_price }, // data sent with the post request
+
+                // handle a successful response
+                success : function(data) {
+                    // $('#post-text').val(''); // remove the value from the input
+                    // alert(json)
+
+                    var table = $(".table");
+                     // remove data after submitting data 
+                    table.children('tbody').children('tr').remove();
+                    ary.
+                    console.log(data); // log the returned json to the console
+                    // console.log("success"); // another sanity check
+                },
+
+                // handle a non-successful response
+                error : function(xhr,errmsg,err) {
+                    $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                        " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
+                
+                    console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                }
+            });
+        };
     });
 </script>
 </body>
