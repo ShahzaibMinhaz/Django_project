@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .managers import CustomManager
 
 class profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
@@ -21,5 +22,15 @@ class itemdetails(models.Model):
 
     def __str__(self):
         return str(self.Item_Name)
+
+'''model managers Practice'''
+
+
+
+class Person_details(models.Model):
+    firstName = models.CharField(max_length=100)
+    lastName = models.CharField(max_length=100)
+    persons = models.Manager()
+    personorder = CustomManager()
 
 

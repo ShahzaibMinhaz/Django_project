@@ -32,7 +32,7 @@
         <input type="text" disabled class="form-control TotalPrice" placeholder="0" aria-label="Username" aria-describedby="basic-addon1">
         <input type="button" class="btn btn-success mt-3 SubmitInvoice" value="Submit Invoice Data">
       </div>
-     
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script> -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.min.js"></script>
@@ -105,6 +105,7 @@
                     productName = $tds.eq(0).text(),
                     productQuantity = $tds.eq(1).text(),
                     productPrice = $tds.eq(2).text();
+                    console.log($tds.eq(3).text())
                     ary.push({ productName: productName, productQuantity: productQuantity,productPrice:productPrice });
                 }
             });
@@ -134,7 +135,7 @@
                 headers:{
                     "X-CSRFToken": getCookie("csrftoken")
                 },
-                url : "submitinvoice/", // the endpoint
+                url : "submitinvoice/", // the endpoint 
                 type : "POST", // http method
                 data : { 'table_Data' : JSON.stringify(ary),'total_Price': Total_price }, // data sent with the post request
 
@@ -142,12 +143,15 @@
                 success : function(data) {
                     // $('#post-text').val(''); // remove the value from the input
                     // alert(json)
-
-                    var table = $(".table");
-                     // remove data after submitting data 
-                    table.children('tbody').children('tr').remove();
-                    ary.
-                    console.log(data); // log the returned json to the console
+                    if (data == 'User is not logged in'){
+                        console.log(data);
+                    }else{
+                         var table = $(".table");
+                        // remove data after submitting data 
+                        table.children('tbody').children('tr').remove();
+                        console.log(data); // log the returned json to the console
+                    }
+                   
                     // console.log("success"); // another sanity check
                 },
 

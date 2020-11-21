@@ -18,6 +18,7 @@ urlpatterns = [
     path('delsessions',views.delsessions),
     path('requestsessions',views.requestsessions),
     path('invoice',views.invoice),
+    path('modelmanager',views.modelManager),
 
 
     # with AJAX request
